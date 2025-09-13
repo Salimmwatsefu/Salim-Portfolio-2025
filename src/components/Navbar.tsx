@@ -1,5 +1,3 @@
-import React from 'react'
-import { FaGithub, FaLinkedin, FaTwitter, FaMedium } from "react-icons/fa";
 import RevealEmail from './ui/RevealEmail';
 
 function Navbar() {
