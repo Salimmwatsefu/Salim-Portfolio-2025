@@ -31,7 +31,7 @@ const ProjectsCard: React.FC<ProjectsCardProps> = ({
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1, 
-      transition: { duration: 0.5, ease: "easeOut" } 
+      transition: { duration: 0.5, ease: "easeOut" } as const
     },
   };
 
@@ -54,7 +54,7 @@ const ProjectsCard: React.FC<ProjectsCardProps> = ({
   if (hasError) {
     return (
       <div className="rounded-2xl shadow-xl overflow-hidden relative h-[500px] bg-black group flex items-center justify-center">
-        <Link to={href} className="block h-full w-full flex items-center justify-center">
+        <Link to={href} className=" h-full w-full flex items-center justify-center">
           <div className="text-center text-gray-400">
             <div className="w-16 h-16 border-4 border-gray-500/30 border-t-gray-500 rounded-full animate-spin mb-4 mx-auto"></div>
             <p className="text-sm">Image failed to load</p>

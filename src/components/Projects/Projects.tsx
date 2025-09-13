@@ -16,17 +16,17 @@ const headerVariants = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: { duration: 0.6, ease: "easeOut" } as const,
   },
 };
 
 // Animation variants for the project cards - reduced delay and duration for faster feel
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i) => ({
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, delay: i * 0.1, ease: "easeOut" },
+    transition: { duration: 0.4, delay: i * 0.1, ease: "easeOut" } as const,
   }),
 };
 

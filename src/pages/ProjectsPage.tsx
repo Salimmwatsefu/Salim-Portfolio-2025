@@ -1,4 +1,3 @@
-import React from 'react'
 import { getAllProjects } from '../utils/getProjects'
 import Projects from '../components/Projects/Projects';
 

@@ -1,11 +1,8 @@
 
 import { motion } from "framer-motion";
-import { FiCode, FiLayout, FiCommand, FiCpu, FiDatabase, FiFeather, } from "react-icons/fi";
-import { TbBrandReact, TbBrandTypescript } from "react-icons/tb";
+import { FiCode} from "react-icons/fi";
 
-import { BiRightArrow } from "react-icons/bi";
-import { Link } from "react-router";
-import { SiTypescript, SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiPostgresql, SiSqlite, SiExpress, SiFlask,  SiPytorch, SiTensorflow, SiScikitlearn, SiNumpy, SiPandas } from "react-icons/si";
+import { SiTypescript, SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiPostgresql, SiSqlite, SiExpress, SiFlask,  SiPytorch, SiScikitlearn,  } from "react-icons/si";
 import { FaBrain, FaRobot, FaLanguage } from "react-icons/fa";
 
 

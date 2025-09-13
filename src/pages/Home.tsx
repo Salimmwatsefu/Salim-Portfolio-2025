@@ -1,4 +1,3 @@
-import React from "react";
 import { Hero2 } from "../components/Hero";
 import Navbar from "../components/Navbar";
 
