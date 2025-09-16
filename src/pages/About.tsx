@@ -4,6 +4,7 @@ import { FiCode} from "react-icons/fi";
 
 import { SiTypescript, SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiPostgresql, SiSqlite, SiExpress, SiFlask,  SiPytorch, SiScikitlearn,  } from "react-icons/si";
 import { FaBrain, FaRobot, FaLanguage } from "react-icons/fa";
+import SectionDivider from "../components/ui/SectionDivider";
 
 
 
@@ -43,7 +44,7 @@ const quotes = [
   // Add more quotes...
 ];
   return (
-    <section className="min-h-screen pb-20 md:pt-8 pt-1 px-4 sm:px-8 ">
+    <section className=" pb-10 md:pt-8 pt-1 px-4 sm:px-8 ">
 
       <div className="max-w-6xl mx-auto mt-10">
         {/* Creative Philosophy Header */}
@@ -142,7 +143,7 @@ const quotes = [
 
          <div className=' rounded-lg mt-10 '>
 
-          <div className='absolute border-2 border-orange-700 md:h-[400px] h-[330px] rounded-lg md:w-[400px]  w-[330px] ml-10 mt-6  '></div>
+          <div className='absolute border-2 border-orange-700 md:h-[400px] h-[300px] rounded-lg md:w-[400px]  w-[300px] ml-10 mt-6  '></div>
           <img
           alt=''
           src='salim.jpg'
@@ -203,6 +204,10 @@ const quotes = [
 
         
       </blockquote>
+
+      <div className=" block md:hidden">
+        <SectionDivider />
+      </div>
 
       <blockquote>
         <header className="sm:flex sm:items-center">

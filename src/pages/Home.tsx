@@ -5,6 +5,11 @@ import SidebarLayout from "../components/SidebarLayout";
 import { getAllProjects } from "../utils/getProjects";
 import Projects from "../components/Projects/Projects";
 import About from "./About";
+import Blog from "./Blog";
+import Footer from "./Footer";
+import SectionDivider from "../components/ui/SectionDivider";
+import { Section } from "lucide-react";
+
 
 
 
@@ -35,7 +40,14 @@ function Home() {
 
       {/* Shared section (always visible) */}
       <Projects projects={projects} featuredOnly showSeeAll />;
+      <SectionDivider />
       <About />
+      <SectionDivider />
+      <Blog />
+
+      <SectionDivider />
+      <Footer />
+      
      
     </div>
   );
