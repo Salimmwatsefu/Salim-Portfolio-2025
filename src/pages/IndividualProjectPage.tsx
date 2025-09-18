@@ -152,7 +152,7 @@ export default function IndividualProjectPage() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -20]);
 
   // Updated helper to render Markdown content with staggered animations
-  const renderMarkdownContent = (content?: string, delayOffset = 0) => {
+   const renderMarkdownContent = (content?: string, delayOffset = 0) => {
     if (!content) return null;
 
     return (
@@ -160,62 +160,47 @@ export default function IndividualProjectPage() {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            // Paragraphs
-            p: ({ children, ...props }) => (
+            p: ({ children }) => (
               <motion.p
-                {...props}
                 className="text-gray-200 leading-relaxed text-lg mb-4"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 30 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.1, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.1,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
               >
                 {children}
               </motion.p>
             ),
-            // List items
-            li: ({ children, ...props }) => (
+            li: ({ children }) => (
               <motion.li
-                {...props}
                 className="text-gray-200 leading-relaxed ml-6 list-disc text-lg mb-2"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 30 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.15, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.15,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
               >
                 {children}
               </motion.li>
             ),
-            // Bold/Strong text
-            strong: ({ children }) => (
-              <strong className="font-semibold text-white">
-                {children}
-              </strong>
-            ),
-            // Italic/Emphasis
-            em: ({ children }) => (
-              <em className="italic text-gray-300">
-                {children}
-              </em>
-            ),
-            // Headings
+            strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+            em: ({ children }) => <em className="italic text-gray-300">{children}</em>,
             h1: ({ children }) => (
               <motion.h1
                 className="text-2xl font-bold text-white mb-4 mt-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
               >
                 {children}
@@ -226,10 +211,10 @@ export default function IndividualProjectPage() {
                 className="text-xl font-semibold text-white mb-3 mt-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.1, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.1,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
               >
                 {children}
@@ -240,52 +225,48 @@ export default function IndividualProjectPage() {
                 className="text-lg font-semibold text-orange-300 mb-3 mt-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.1, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.1,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
               >
                 {children}
               </motion.h3>
             ),
-            // Links
-            a: ({ children, href, ...props }) => (
+            a: ({ children, href }) => (
               <motion.a
                 href={href}
                 className="text-orange-300 hover:text-orange-400 underline transition-colors duration-300"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.15, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.15,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
-                {...props}
               >
                 {children}
               </motion.a>
             ),
-            // Blockquotes
             blockquote: ({ children }) => (
               <motion.blockquote
                 className="border-l-4 border-orange-500/30 pl-4 italic text-gray-300 bg-gray-900/50 py-3 rounded-r-lg"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.2, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.2,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
               >
                 {children}
               </motion.blockquote>
             ),
-            // Code blocks
-            code: ({ children, className, ...props }) => {
-              const inline = !className?.includes('language-');
+            code: ({ children, className }) => {
+              const inline = !className?.includes("language-");
               return inline ? (
-                <code className="bg-gray-800/50 text-orange-300 px-1 py-0.5 rounded text-sm font-mono" {...props}>
+                <code className="bg-gray-800/50 text-orange-300 px-1 py-0.5 rounded text-sm font-mono">
                   {children}
                 </code>
               ) : (
@@ -293,32 +274,28 @@ export default function IndividualProjectPage() {
                   className="bg-gray-900/50 p-4 rounded-lg overflow-x-auto mt-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: delayOffset + 0.2, 
-                    ease: [0.4, 0, 0.2, 1] 
+                  transition={{
+                    duration: 0.6,
+                    delay: delayOffset + 0.2,
+                    ease: [0.4, 0, 0.2, 1],
                   }}
                 >
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
+                  <code className={className}>{children}</code>
                 </motion.pre>
               );
             },
-            // Images
-            img: ({ children, src, alt, ...props }) => (
+            img: ({ src, alt }) => (
               <motion.img
-                src={src}
-                alt={alt}
+                src={src || ""}
+                alt={alt || ""}
                 className="rounded-lg shadow-lg max-w-full h-auto"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: delayOffset + 0.2, 
-                  ease: [0.4, 0, 0.2, 1] 
+                transition={{
+                  duration: 0.6,
+                  delay: delayOffset + 0.2,
+                  ease: [0.4, 0, 0.2, 1],
                 }}
-                {...props}
               />
             ),
           }}
