@@ -8,7 +8,7 @@ import About from "./About";
 import Blog from "./Blog";
 import Footer from "./Footer";
 import SectionDivider from "../components/ui/SectionDivider";
-import { Section } from "lucide-react";
+
 
 
 

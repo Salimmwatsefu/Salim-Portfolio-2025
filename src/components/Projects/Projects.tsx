@@ -23,7 +23,7 @@ const headerVariants = {
 // Animation variants for the project cards - reduced delay and duration for faster feel
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
+  visible: () => ({
     opacity: 1,
     y: 0,
     transition: { duration: 0.4,  ease: "easeOut" } as const,
