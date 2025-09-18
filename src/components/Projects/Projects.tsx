@@ -26,7 +26,7 @@ const cardVariants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, delay: i * 0.1, ease: "easeOut" } as const,
+    transition: { duration: 0.4,  ease: "easeOut" } as const,
   }),
 };
 
@@ -71,7 +71,7 @@ const Projects: React.FC<Props> = ({ projects, featuredOnly, showSeeAll }) => {
               title={project.title}
               description="" // Optional: use first line of content if desired
               tools={project.tools}
-              loading="lazy"
+             
             />
           </motion.div>
         ))}

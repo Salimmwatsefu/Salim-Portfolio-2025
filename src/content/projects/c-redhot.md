@@ -1,7 +1,7 @@
 ---
 id: redhot
 title: RedHot Africa
-imgSrc: /hero-reading.jpg
+imgSrc: /hero-reading.webp
 imgAlt: Redhot
 featured: true
 tools: Website, UX/UI

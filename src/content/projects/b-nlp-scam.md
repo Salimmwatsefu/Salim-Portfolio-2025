@@ -1,7 +1,7 @@
 ---
 id: scam-shield
 title: SMS Scam Shield
-imgSrc: /scam3.png
+imgSrc: /scam3.webp
 imgAlt: Scam
 featured: true
 tools: NLP, Machine Learning

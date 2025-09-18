@@ -1,7 +1,6 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { CiMenuKebab } from "react-icons/ci";
-import { Link } from "react-router-dom";
 
 type BlogCardProps = {
   href: string;
@@ -25,17 +24,22 @@ const BlogCard: React.FC<BlogCardProps> = ({
   loading = "lazy",
 }) => {
   return (
-    <Link to={href}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block"
+    >
       <article className="has-thumbnail bg-black/20 rounded-lg shadow-lg shadow-orange-500/10 overflow-hidden w-full max-w-4xl mx-auto">
         <div className="flex flex-col sm:flex-row">
           <div className="w-full h-32 sm:w-1/3 sm:h-auto flex-shrink-0 overflow-hidden">
-  <img
-    src={imgSrc}
-    alt={imgAlt}
-    className="object-cover w-full h-full"
-    loading={loading}
-  />
-</div>
+            <img
+              src={imgSrc}
+              alt={imgAlt}
+              className="object-cover w-full h-full"
+              loading={loading}
+            />
+          </div>
 
           <div className="p-4 sm:p-6 flex-1">
             <h2
@@ -74,7 +78,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
           </div>
         </div>
       </article>
-    </Link>
+    </a>
   );
 };
 

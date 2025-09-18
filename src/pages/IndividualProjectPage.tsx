@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import yaml from "js-yaml";
 import { motion, useMotionValue, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const projectFiles = import.meta.glob("../content/projects/*.md", {
   as: "raw",
@@ -60,18 +62,44 @@ export default function IndividualProjectPage() {
     });
   }, [id]);
 
-  // Hero scroll handling
+  // Hero scroll handling - Updated to support mobile
   useEffect(() => {
+    let touchStartY = 0;
+    let hasScrolled = false;
+
     const handleScroll = (e: WheelEvent) => {
       if (scrollStage === 'unlocked') return;
       e.preventDefault();
       if (scrollStage === 'initial' && e.deltaY > 0) {
-        setScrollStage('revealing');
-        overlayOpacity.set(0.7);
-        textOpacity.set(1);
-        textY.set(0);
-        setTimeout(() => setScrollStage('unlocked'), 1200);
+        triggerReveal();
       }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (scrollStage === 'unlocked') return;
+      touchStartY = e.touches[0].clientY;
+      hasScrolled = false;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (scrollStage === 'unlocked' || hasScrolled) return;
+      e.preventDefault();
+      
+      const touchCurrentY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchCurrentY;
+      
+      // Trigger on swipe down (deltaY > 0)
+      if (deltaY > 30 && scrollStage === 'initial') { // 30px threshold
+        hasScrolled = true;
+        triggerReveal();
+      }
+    };
+
+    const handleTouchEnd = () => {
+      // Reset after a short delay
+      setTimeout(() => {
+        hasScrolled = false;
+      }, 300);
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -81,11 +109,29 @@ export default function IndividualProjectPage() {
       }
     };
 
+    // Extract reveal logic to reusable function
+    const triggerReveal = () => {
+      setScrollStage('revealing');
+      overlayOpacity.set(0.7);
+      textOpacity.set(1);
+      textY.set(0);
+      setTimeout(() => setScrollStage('unlocked'), 1200);
+    };
+
     if (scrollStage !== 'unlocked') document.body.style.overflow = 'hidden';
+    
+    // Add all event listeners
     window.addEventListener('wheel', handleScroll, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
+    
     return () => {
       window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'auto';
     };
@@ -105,7 +151,185 @@ export default function IndividualProjectPage() {
   // Parallax effect for hero section (subtle to avoid gap)
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -20]);
 
-  // Helper to render multi-line text with staggered animations
+  // Updated helper to render Markdown content with staggered animations
+  const renderMarkdownContent = (content?: string, delayOffset = 0) => {
+    if (!content) return null;
+
+    return (
+      <div className="prose prose-invert prose-lg max-w-none">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            // Paragraphs
+            p: ({ children, ...props }) => (
+              <motion.p
+                {...props}
+                className="text-gray-200 leading-relaxed text-lg mb-4"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 30 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.1, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {children}
+              </motion.p>
+            ),
+            // List items
+            li: ({ children, ...props }) => (
+              <motion.li
+                {...props}
+                className="text-gray-200 leading-relaxed ml-6 list-disc text-lg mb-2"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 30 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.15, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {children}
+              </motion.li>
+            ),
+            // Bold/Strong text
+            strong: ({ children }) => (
+              <strong className="font-semibold text-white">
+                {children}
+              </strong>
+            ),
+            // Italic/Emphasis
+            em: ({ children }) => (
+              <em className="italic text-gray-300">
+                {children}
+              </em>
+            ),
+            // Headings
+            h1: ({ children }) => (
+              <motion.h1
+                className="text-2xl font-bold text-white mb-4 mt-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {children}
+              </motion.h1>
+            ),
+            h2: ({ children }) => (
+              <motion.h2
+                className="text-xl font-semibold text-white mb-3 mt-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.1, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {children}
+              </motion.h2>
+            ),
+            h3: ({ children }) => (
+              <motion.h3
+                className="text-lg font-semibold text-orange-300 mb-3 mt-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.1, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {children}
+              </motion.h3>
+            ),
+            // Links
+            a: ({ children, href, ...props }) => (
+              <motion.a
+                href={href}
+                className="text-orange-300 hover:text-orange-400 underline transition-colors duration-300"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.15, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+                {...props}
+              >
+                {children}
+              </motion.a>
+            ),
+            // Blockquotes
+            blockquote: ({ children }) => (
+              <motion.blockquote
+                className="border-l-4 border-orange-500/30 pl-4 italic text-gray-300 bg-gray-900/50 py-3 rounded-r-lg"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.2, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {children}
+              </motion.blockquote>
+            ),
+            // Code blocks
+            code: ({ children, className, ...props }) => {
+              const inline = !className?.includes('language-');
+              return inline ? (
+                <code className="bg-gray-800/50 text-orange-300 px-1 py-0.5 rounded text-sm font-mono" {...props}>
+                  {children}
+                </code>
+              ) : (
+                <motion.pre
+                  className="bg-gray-900/50 p-4 rounded-lg overflow-x-auto mt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: delayOffset + 0.2, 
+                    ease: [0.4, 0, 0.2, 1] 
+                  }}
+                >
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                </motion.pre>
+              );
+            },
+            // Images
+            img: ({ children, src, alt, ...props }) => (
+              <motion.img
+                src={src}
+                alt={alt}
+                className="rounded-lg shadow-lg max-w-full h-auto"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: delayOffset + 0.2, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+                {...props}
+              />
+            ),
+          }}
+        >
+          {content}
+        </ReactMarkdown>
+      </div>
+    );
+  };
+
+  // Legacy renderLines for overview (keeps existing behavior)
   const renderLines = (text?: string) =>
     text?.split("\n").map((line, i) =>
       line.trim().startsWith("-") ? (
@@ -220,65 +444,65 @@ export default function IndividualProjectPage() {
       <AnimatePresence>
         {scrollStage === 'unlocked' && (
           <>
-            {project.industry && (
+            {/* Combined Industry & Live Site Section */}
+            {(project.industry || project.site) && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12 "
+                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
                 viewport={{ once: false, amount: 0.5 }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
-                <div className="max-w-4xl w-full space-y-6">
-                  <motion.h2
-                    className="text-sm font-semibold text-orange-400/70 uppercase tracking-wider"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    Industry
-                  </motion.h2>
-                  <div className="text-lg text-gray-300 leading-relaxed">{renderLines(project.industry)}</div>
-                </div>
-              </motion.section>
-            )}
+                <div className="max-w-4xl w-full space-y-8">
+                  {/* Industry Content */}
+                  {project.industry && (
+                    <div className="space-y-6">
+                      <motion.h2
+                        className="text-sm font-semibold text-orange-400/70 uppercase tracking-wider"
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                      >
+                        Industry
+                      </motion.h2>
+                      <div className="text-lg text-gray-300 leading-relaxed">
+                        {renderMarkdownContent(project.industry, 0.3)}
+                      </div>
+                    </div>
+                  )}
 
-            {project.site && (
-              <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12 "
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -100 }}
-                viewport={{ once: false, amount: 0.5 }}
-                transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-              >
-                <div className="max-w-4xl w-full space-y-6">
-                  <motion.h2
-                    className="text-sm font-semibold text-orange-400/70 uppercase tracking-wider"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    Live Site
-                  </motion.h2>
-                  <motion.a
-                    href={project.site}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-orange-300 underline text-lg hover:text-orange-400 transition-colors duration-300"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    {project.site}
-                  </motion.a>
+                  {/* Live Site Content */}
+                  {project.site && (
+                    <div className="space-y-6 pt-6 border-t border-orange-900/20">
+                      <motion.h2
+                        className="text-sm font-semibold text-orange-400/70 uppercase tracking-wider"
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                      >
+                        Live Site
+                      </motion.h2>
+                      <motion.a
+                        href={project.site}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-orange-300 underline text-lg hover:text-orange-400 transition-colors duration-300"
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                      >
+                        {project.site}
+                      </motion.a>
+                    </div>
+                  )}
                 </div>
               </motion.section>
             )}
 
             {project.technology && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12 "
+                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -314,7 +538,7 @@ export default function IndividualProjectPage() {
 
             {project.role && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12 "
+                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -330,14 +554,16 @@ export default function IndividualProjectPage() {
                   >
                     My Role
                   </motion.h2>
-                  <div className="text-lg text-gray-300 leading-relaxed">{renderLines(project.role)}</div>
+                  <div className="text-lg text-gray-300 leading-relaxed">
+                    {renderMarkdownContent(project.role, 0.2)}
+                  </div>
                 </div>
               </motion.section>
             )}
 
             {project.problem && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12 "
+                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -353,14 +579,16 @@ export default function IndividualProjectPage() {
                   >
                     Problem Statement
                   </motion.h2>
-                  <div className="text-lg text-gray-300 leading-relaxed">{renderLines(project.problem)}</div>
+                  <div className="text-lg text-gray-300 leading-relaxed">
+                    {renderMarkdownContent(project.problem, 0.2)}
+                  </div>
                 </div>
               </motion.section>
             )}
 
             {project.solution && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12 "
+                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -376,7 +604,9 @@ export default function IndividualProjectPage() {
                   >
                     Solution
                   </motion.h2>
-                  <div className="text-lg text-gray-300 leading-relaxed">{renderLines(project.solution)}</div>
+                  <div className="text-lg text-gray-300 leading-relaxed">
+                    {renderMarkdownContent(project.solution, 0.2)}
+                  </div>
                 </div>
               </motion.section>
             )}

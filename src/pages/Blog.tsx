@@ -12,49 +12,63 @@ type BlogPost = {
   date: string;
   readTime: string;
   featured?: boolean;
+  link: string; // 👈 Added for Medium link
 };
 
-// Sample blog posts with custom descriptions
+// Sample blog posts with external Medium links
 const blogPosts: BlogPost[] = [
   {
     id: "1",
-    imgSrc: "https://plus.unsplash.com/premium_photo-1669530958591-15cbad83785b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TmV4dCUyMEpTfGVufDB8fDB8fHww",
+    imgSrc:
+      "https://plus.unsplash.com/premium_photo-1669530958591-15cbad83785b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TmV4dCUyMEpTfGVufDB8fDB8fHww",
     imgAlt: "Next.js framework illustration",
     title: "Next.js: The Next Generation of React",
-    description: "Discover how Next.js supercharges React with powerful tools like server-side rendering and dynamic routing to build lightning-fast, SEO-friendly web apps.",
+    description:
+      "Discover how Next.js supercharges React with powerful tools like server-side rendering and dynamic routing to build lightning-fast, SEO-friendly web apps.",
     date: "May 13, 2023",
     readTime: "4 min read",
     featured: true,
+    link: "https://medium.com/@sjmwatsefu/next-js-the-next-generation-of-react-51f97fd6ce04",
   },
   {
     id: "2",
-    imgSrc: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imgSrc:
+      "https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     imgAlt: "WSL Ubuntu setup",
-    title: "How to install WSL 2 + Ubuntu 20.04 LTS on Windows and open Visual Studio Code from the terminal",
-    description: "Set up a seamless Ubuntu environment on Windows with WSL 2 and integrate Visual Studio Code for a powerful cross-platform coding experience.",
+    title:
+      "How to install WSL 2 + Ubuntu 20.04 LTS on Windows and open Visual Studio Code from the terminal",
+    description:
+      "Set up a seamless Ubuntu environment on Windows with WSL 2 and integrate Visual Studio Code for a powerful cross-platform coding experience.",
     date: "Jul 26, 2023",
     readTime: "8 min read",
     featured: false,
+    link: "https://medium.com/@sjmwatsefu/how-to-install-wsl-2-ubuntu-20-04-lts-on-windows-and-open-visual-studio-code-from-the-terminal-e580761e84f8",
   },
   {
     id: "3",
-    imgSrc: "https://images.unsplash.com/photo-1580121441575-41bcb5c6b47c?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imgSrc:
+      "https://images.unsplash.com/photo-1580121441575-41bcb5c6b47c?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     imgAlt: "Django models diagram",
     title: "Understanding Models in Django",
-    description: "Unlock the power of Django models to structure your database with ease, mastering one-to-one, one-to-many, and many-to-many relationships.",
+    description:
+      "Unlock the power of Django models to structure your database with ease, mastering one-to-one, one-to-many, and many-to-many relationships.",
     date: "Jul 26, 2023",
     readTime: "5 min read",
     featured: false,
+    link: "https://medium.com/@sjmwatsefu/understanding-models-in-django-26f56665fa0a",
   },
   {
     id: "4",
-    imgSrc: "https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imgSrc:
+      "https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     imgAlt: "Docker container illustration",
     title: "Containerizing Next.js App with Docker",
-    description: "Learn to package your Next.js app in a Docker container for consistent, portable deployments across any environment.",
+    description:
+      "Learn to package your Next.js app in a Docker container for consistent, portable deployments across any environment.",
     date: "Nov 28, 2023",
     readTime: "6 min read",
     featured: false,
+    link: "https://medium.com/stackademic/containerizing-next-js-app-with-docker-fbccdde050d5",
   },
 ];
 
@@ -84,7 +98,9 @@ type BlogProps = {
 };
 
 const Blog: React.FC<BlogProps> = ({ featuredOnly = false }) => {
-  const filtered = featuredOnly ? blogPosts.filter((p) => p.featured) : blogPosts;
+  const filtered = featuredOnly
+    ? blogPosts.filter((p) => p.featured)
+    : blogPosts;
 
   return (
     <div className="mt-16 sm:mt-24 lg:mt-32 text-white">
@@ -118,7 +134,7 @@ const Blog: React.FC<BlogProps> = ({ featuredOnly = false }) => {
             variants={cardVariants}
           >
             <BlogCard
-              href={`/blog/${post.id}`}
+              href={post.link} // 👈 Medium link
               imgSrc={post.imgSrc}
               imgAlt={post.imgAlt}
               title={post.title}

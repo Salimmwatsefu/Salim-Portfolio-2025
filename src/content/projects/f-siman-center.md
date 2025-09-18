@@ -1,7 +1,7 @@
 ---
-id: a-siman-center
+id: f-siman-center
 title: Siman Center
-imgSrc: /siman1.jpeg
+imgSrc: /siman1.webp
 imgAlt: Siman Center
 featured: true
 tools: Website, UX/UI
@@ -23,11 +23,11 @@ role: |
 solution: |
   To address the challenge, I focused on three core areas:
   
-  1. **Calm & Clean User Interface:** I designed a minimalist UI with a soft color palette and ample white space to create a serene and welcoming user experience. The typography was chosen for its high readability and professional feel.
+  1. **1. Calm & Clean User Interface:** I designed a minimalist UI with a soft color palette and ample white space to create a serene and welcoming user experience. The typography was chosen for its high readability and professional feel.
   
-  2. **Intuitive Navigation & Structure:** I organized the website's content into clear, logical sections (Home, About, Services, Contact). This allows users to easily find information about the clinic's approach, services, and partners without feeling overwhelmed.
+  2. **2. Intuitive Navigation & Structure:** I organized the website's content into clear, logical sections (Home, About, Services, Contact). This allows users to easily find information about the clinic's approach, services, and partners without feeling overwhelmed.
   
-  3. **Performance & Accessibility:** The site was built with React and Typescript for a robust and maintainable codebase. I used Framer Motion to add subtle, smooth animations that enhance the user experience without sacrificing performance. The final application is fast-loading and fully responsive, ensuring accessibility across all devices.
+  3. **3. Performance & Accessibility:** The site was built with React and Typescript for a robust and maintainable codebase. I used Framer Motion to add subtle, smooth animations that enhance the user experience without sacrificing performance. The final application is fast-loading and fully responsive, ensuring accessibility across all devices.
 
 
 
