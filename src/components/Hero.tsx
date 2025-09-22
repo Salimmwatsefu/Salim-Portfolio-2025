@@ -7,7 +7,7 @@ const Hero2 = () => {
   return (
     <div className="flex flex-col text-white relative">
       {/* Greeting Section */}
-      <div className="relative flex flex-col mt-24 md:ml-24 ml-14">
+      <div className="relative flex flex-col md:mt-24 mt-14 md:ml-24 ml-14">
         {/* Waving hand animation */}
         <motion.div
           initial={{ rotate: 0 }}
