@@ -2,12 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import ProjectsCard from "./ProjectsCard";
 import type { Project } from "../../utils/getProjects";
-import { Link } from "react-router-dom";
 
 type Props = {
   projects: Project[];
   featuredOnly?: boolean;
-  showSeeAll?: boolean;
 };
 
 // Animation variants for the header
@@ -30,7 +28,7 @@ const cardVariants = {
   }),
 };
 
-const Projects: React.FC<Props> = ({ projects, featuredOnly, showSeeAll }) => {
+const Projects: React.FC<Props> = ({ projects, featuredOnly }) => {
   const filtered = featuredOnly ? projects.filter((p) => p.featured) : projects;
 
   return (
