@@ -3,7 +3,7 @@ import RevealEmail from './ui/RevealEmail';
 function Navbar() {
   return (
     <div className="bg-transparent">
-      <div className="mt-7 mx-10 md:flex items-center justify-between">
+      <div className="mt-7 mx-10 md:flex space-y-5 md:space-y-0 items-center justify-between">
         {/* Left side - Name & Title */}
         <nav>
           <div>
