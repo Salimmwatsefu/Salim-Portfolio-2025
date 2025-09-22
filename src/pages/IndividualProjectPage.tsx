@@ -62,7 +62,7 @@ export default function IndividualProjectPage() {
     });
   }, [id]);
 
-  // Hero scroll handling - Updated to support mobile
+  // Hero scroll handling - Updated to support mobile with smoother transitions
   useEffect(() => {
     let touchStartY = 0;
     let hasScrolled = false;
@@ -118,7 +118,11 @@ export default function IndividualProjectPage() {
       setTimeout(() => setScrollStage('unlocked'), 1200);
     };
 
-    if (scrollStage !== 'unlocked') document.body.style.overflow = 'hidden';
+    if (scrollStage !== 'unlocked') {
+      document.body.style.overflow = 'hidden';
+      // Prevent iOS bounce
+      document.documentElement.style.overflow = 'hidden';
+    }
     
     // Add all event listeners
     window.addEventListener('wheel', handleScroll, { passive: false });
@@ -134,6 +138,7 @@ export default function IndividualProjectPage() {
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
     };
   }, [scrollStage, overlayOpacity, textOpacity, textY]);
 
@@ -171,6 +176,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.1,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.p>
@@ -186,6 +192,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.15,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.li>
@@ -202,6 +209,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.h1>
@@ -216,6 +224,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.1,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.h2>
@@ -230,6 +239,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.1,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.h3>
@@ -245,6 +255,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.15,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.a>
@@ -259,6 +270,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.2,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               >
                 {children}
               </motion.blockquote>
@@ -279,6 +291,7 @@ export default function IndividualProjectPage() {
                     delay: delayOffset + 0.2,
                     ease: [0.4, 0, 0.2, 1],
                   }}
+                  viewport={{ once: false, margin: "-100px 0px" }}
                 >
                   <code className={className}>{children}</code>
                 </motion.pre>
@@ -296,6 +309,7 @@ export default function IndividualProjectPage() {
                   delay: delayOffset + 0.2,
                   ease: [0.4, 0, 0.2, 1],
                 }}
+                viewport={{ once: false, margin: "-100px 0px" }}
               />
             ),
           }}
@@ -317,6 +331,7 @@ export default function IndividualProjectPage() {
           whileInView={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 30 }}
           transition={{ duration: 0.6, delay: i * 0.15, ease: [0.4, 0, 0.2, 1] }}
+          viewport={{ once: false, margin: "-100px 0px" }}
         >
           {line.replace(/^- /, "")}
         </motion.li>
@@ -328,6 +343,7 @@ export default function IndividualProjectPage() {
           whileInView={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 30 }}
           transition={{ duration: 0.6, delay: i * 0.15, ease: [0.4, 0, 0.2, 1] }}
+          viewport={{ once: false, margin: "-100px 0px" }}
         >
           {line}
         </motion.p>
@@ -341,11 +357,15 @@ export default function IndividualProjectPage() {
   );
 
   return (
-    <div ref={containerRef} className="text-white snap-y snap-mandatory overflow-y-scroll h-screen bg-transparent">
+    <div 
+      ref={containerRef} 
+      className="text-white bg-transparent min-h-screen"
+      style={{ scrollBehavior: 'smooth' }}
+    >
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
-        className="relative w-full min-h-screen snap-start flex items-center justify-center"
+        className="relative w-full min-h-screen flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -417,18 +437,18 @@ export default function IndividualProjectPage() {
         </motion.div>
       </motion.section>
 
-      {/* Scroll-triggered Content Sections */}
+      {/* Scroll-triggered Content Sections - Removed snap behavior */}
       <AnimatePresence>
         {scrollStage === 'unlocked' && (
-          <>
+          <div className="scroll-mt-16">
             {/* Combined Industry & Live Site Section */}
             {(project.industry || project.site) && (
               <motion.section
-                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
+                className="w-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: false, margin: "-20% 0px" }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
                 <div className="max-w-4xl w-full space-y-8">
@@ -479,11 +499,11 @@ export default function IndividualProjectPage() {
 
             {project.technology && (
               <motion.section
-                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
+                className="w-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: false, margin: "-20% 0px" }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
                 <div className="max-w-4xl w-full space-y-6">
@@ -515,11 +535,11 @@ export default function IndividualProjectPage() {
 
             {project.role && (
               <motion.section
-                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
+                className="w-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: false, margin: "-20% 0px" }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
                 <div className="max-w-4xl w-full space-y-6">
@@ -540,11 +560,11 @@ export default function IndividualProjectPage() {
 
             {project.problem && (
               <motion.section
-                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
+                className="w-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: false, margin: "-20% 0px" }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
                 <div className="max-w-4xl w-full space-y-6">
@@ -565,11 +585,11 @@ export default function IndividualProjectPage() {
 
             {project.solution && (
               <motion.section
-                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
+                className="w-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-20"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: false, margin: "-20% 0px" }}
                 transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               >
                 <div className="max-w-4xl w-full space-y-6">
@@ -587,7 +607,7 @@ export default function IndividualProjectPage() {
                 </div>
               </motion.section>
             )}
-          </>
+          </div>
         )}
       </AnimatePresence>
     </div>
