@@ -39,7 +39,7 @@ function Home() {
       </div>
 
       {/* Shared section (always visible) */}
-      <Projects projects={projects} featuredOnly showSeeAll />;
+      <Projects projects={projects}  />;
       <SectionDivider />
       <About />
       <SectionDivider />
