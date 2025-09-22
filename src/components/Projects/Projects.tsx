@@ -77,22 +77,7 @@ const Projects: React.FC<Props> = ({ projects, featuredOnly, showSeeAll }) => {
         ))}
       </div>
 
-      {showSeeAll && (
-        <motion.div
-          className="text-center mt-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <Link
-            to="/projects"
-            className="px-6 py-3 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition"
-          >
-            See all projects
-          </Link>
-        </motion.div>
-      )}
+      
     </div>
   );
 };

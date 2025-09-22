@@ -39,11 +39,11 @@ const ProjectsCard: React.FC<ProjectsCardProps> = ({
 
   if (hasError) {
     return (
-      <div className="rounded-2xl shadow-xl overflow-hidden relative h-[500px] bg-black group flex items-center justify-center">
-        <Link to={href} className="h-full w-full flex items-center justify-center">
-          <div className="text-center text-gray-400">
-            <div className="w-16 h-16 border-4 border-gray-500/30 border-t-gray-500 rounded-full animate-spin mb-4 mx-auto"></div>
-            <p className="text-sm">Image failed to load</p>
+      <div className="group relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 border border-gray-800 hover:border-gray-700 transition-all duration-300">
+        <Link to={href} className="block h-full flex items-center justify-center">
+          <div className="text-center text-gray-500">
+            <div className="w-8 h-8 border-2 border-gray-600/30 border-t-gray-600 rounded-full animate-spin mb-2 mx-auto"></div>
+            <p className="text-xs font-medium">Image failed to load</p>
           </div>
         </Link>
       </div>
@@ -51,21 +51,15 @@ const ProjectsCard: React.FC<ProjectsCardProps> = ({
   }
 
   return (
-    <div className="rounded-2xl shadow-xl overflow-hidden relative h-[500px] bg-black group">
+    <div className="group relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-900 border border-gray-800 hover:border-gray-700 transition-all duration-300 hover:shadow-lg">
       <Link to={href} className="block h-full">
-        <div className="relative w-full h-full rounded-2xl overflow-hidden">
-          {/* Spinner while loading */}
+        <div className="relative w-full h-full">
+          {/* Loading spinner */}
           {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black z-20">
-              <div className="flex flex-col items-center space-y-4">
-                <div className="relative">
-                  <div className="w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin"></div>
-                  <div
-                    className="absolute inset-0 w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin"
-                    style={{ animationDuration: "1.5s" }}
-                  ></div>
-                </div>
-                <p className="text-white text-sm font-medium">Loading...</p>
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900/95 z-20 backdrop-blur-sm">
+              <div className="flex flex-col items-center space-y-2">
+                <div className="w-6 h-6 border-2 border-orange-400/30 border-t-orange-400 rounded-full animate-spin"></div>
+                <p className="text-xs text-gray-400 font-medium">Loading...</p>
               </div>
             </div>
           )}
@@ -75,29 +69,32 @@ const ProjectsCard: React.FC<ProjectsCardProps> = ({
             ref={imgRef}
             src={imgSrc}
             alt={imgAlt}
-            className="w-full h-full object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             onLoad={handleLoad}
             onError={handleError}
           />
 
-          {/* Overlays */}
-          <div className="absolute inset-0 bg-black/60 transition-opacity duration-300 group-hover:bg-black/20 rounded-2xl"></div>
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-b-2xl pointer-events-none"></div>
+          {/* Subtle overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-xl transition-all duration-300 group-hover:from-black/40"></div>
 
-          {/* Text overlay */}
-          <div className="absolute inset-0 z-10 flex flex-col justify-end p-6">
-            <h1 className="text-4xl font-bold mb-2 text-white tracking-tight">
-              {title}
-            </h1>
-            <p className="text-sm text-gray-200 mb-2 leading-snug">
-              {description}
-            </p>
-            <p className="text-sm text-orange-400 font-medium">{tools}</p>
+          {/* Content overlay */}
+          <div className="absolute inset-0 p-4 flex flex-col justify-end">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-semibold text-white leading-tight line-clamp-1 group-hover:text-orange-300 transition-colors duration-300">
+                {title}
+              </h1>
+              <p className="text-xs text-gray-300 leading-relaxed line-clamp-2">
+                {description}
+              </p>
+              <div className="flex items-center justify-between pt-1">
+                <span className=" text-orange-400 font-medium">{tools}</span>
+                <div className="w-2 h-2 bg-white/20 rounded-full group-hover:bg-orange-400/50 transition-colors duration-300 animate-pulse" />
+              </div>
+            </div>
           </div>
 
-          {/* Accent dots */}
-          <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-orange-500/80 blur-md animate-pulse" />
-          <div className="absolute bottom-6 left-6 w-2 h-2 rounded-full bg-yellow-500/70 blur-sm animate-pulse" />
+          {/* Corner accent */}
+          <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-orange-400/60 backdrop-blur-sm group-hover:bg-orange-400/80 transition-all duration-300" />
         </div>
       </Link>
     </div>

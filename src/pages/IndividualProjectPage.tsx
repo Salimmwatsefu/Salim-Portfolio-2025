@@ -152,7 +152,7 @@ export default function IndividualProjectPage() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -20]);
 
   // Updated helper to render Markdown content with staggered animations
-   const renderMarkdownContent = (content?: string, delayOffset = 0) => {
+  const renderMarkdownContent = (content?: string, delayOffset = 0) => {
     if (!content) return null;
 
     return (
@@ -341,11 +341,11 @@ export default function IndividualProjectPage() {
   );
 
   return (
-    <div ref={containerRef} className="text-white snap-y snap-mandatory overflow-y-scroll h-screen">
+    <div ref={containerRef} className="text-white snap-y snap-mandatory overflow-y-scroll h-screen bg-transparent">
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
-        className="relative w-full min-h-screen snap-start flex items-center justify-center bg-gray-900"
+        className="relative w-full min-h-screen snap-start flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -424,7 +424,7 @@ export default function IndividualProjectPage() {
             {/* Combined Industry & Live Site Section */}
             {(project.industry || project.site) && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
+                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -479,7 +479,7 @@ export default function IndividualProjectPage() {
 
             {project.technology && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
+                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -515,7 +515,7 @@ export default function IndividualProjectPage() {
 
             {project.role && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
+                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -540,7 +540,7 @@ export default function IndividualProjectPage() {
 
             {project.problem && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
+                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
@@ -565,7 +565,7 @@ export default function IndividualProjectPage() {
 
             {project.solution && (
               <motion.section
-                className="min-h-screen snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-12"
+                className="w-full snap-start flex items-center justify-center px-4 sm:px-6 md:px-8 py-16"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
