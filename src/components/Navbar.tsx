@@ -8,7 +8,7 @@ function Navbar() {
         <nav>
           <div>
             <h1 className="text-2xl">Salim Mwatsefu</h1>
-            <h2 className="text-xs text-gray-400">Software Engineer @ Spotify</h2>
+            <h2 className="text-xs text-gray-400">Software Engineer</h2>
           </div>
         </nav>
 
