@@ -63,20 +63,33 @@ const Hero2 = () => {
           Software Engineer
         </motion.h2>
 
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className=" font-normal text-xl leading-tight font-syne text-gray-500"
+        >
+          Frontend Engineering <span className=" font-bold text-orange-500 ">x</span> DevOps.
+        </motion.h3>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-10 text-gray-400 leading-relaxed text font-manrope "
         >
-          From training intelligent machine learning models to designing seamless
-          frontends and scalable backends, I specialize in building systems end-to-end.
+          I specialize in crafting high-performance, user-centered web applications with a strong focus on modern  <span className="text-orange-500 font-medium"> frontend development </span> .
           <br />
           <br />
-          I thrive at the intersection of{" "}
-          <span className="text-orange-500 font-medium">AI</span> and{" "}
-          <span className="text-orange-500 font-medium">software engineering</span> — 
-          crafting solutions that are powerful, elegant, and user-focused.
+          Alongside that, I manage full{" "}
+          <span className="text-orange-500 font-medium">DevOps</span> {" "}
+      
+          workflows, from CI/CD automation and containerization to cloud infrastructure and system monitoring, ensuring that every product I build is stable, scalable, and production-ready.
+
+          <br/>
+
+          <br/>
+          I occasionally explore <span className="text-orange-500 font-medium">AI</span> and <span className="text-orange-500 font-medium">ML</span>, building models and experimenting with <span className="text-orange-500 font-medium">NLP</span> systems to understand their real-world impact.
         </motion.p>
       </div>
 
