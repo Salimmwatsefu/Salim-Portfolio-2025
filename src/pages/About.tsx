@@ -1,4 +1,3 @@
-import React from 'react'
 import AboutHome from '../components/About'
 
 function About() {
