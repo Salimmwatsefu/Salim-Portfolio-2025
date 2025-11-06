@@ -10,12 +10,10 @@ import {
   SiDocker,
   SiAmazonwebservices,
   SiGithubactions,
-  SiGooglecloud,
   SiTensorflow,
   SiPytorch,
   SiTerraform,
   SiDigitalocean,
-  SiD
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 
