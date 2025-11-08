@@ -14,7 +14,7 @@ export default function OutsideTerminal() {
 
        {/* Description and image */}
 
-       <div className=" grid grid-cols-2 my-10">
+       <div className=" grid md:grid-cols-2 grid-cols-1 my-10">
 
      
       <div>

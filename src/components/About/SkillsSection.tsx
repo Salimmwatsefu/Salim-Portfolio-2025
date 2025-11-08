@@ -33,7 +33,7 @@ export default function SkillsSection() {
         </h1>
       </header>
 
-      <div className=" grid grid-cols-2 space-x-5 space-y-10 my-10 ">
+      <div className=" grid md:grid-cols-2 grid-cols-1 space-x-5 space-y-10 my-10 ">
 
       {/* FRONTEND */}
       <div className=" border py-10 px-5 border-orange-100/20 rounded-lg shadow-lg shadow-orange-500/10 hover:border-orange-300/70 transition-all duration-300  ">

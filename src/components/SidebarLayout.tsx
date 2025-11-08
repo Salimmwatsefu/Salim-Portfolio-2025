@@ -25,19 +25,21 @@ export default function SidebarLayout({ children }: SidebarLayoutProps) {
   return (
     <div className="flex text-white h-screen relative">
       <div className="w-24 flex flex-col items-center py-6 border-r border-gray-700 z-50">
-        <div className="border-b border-gray-700 w-full py-6 flex justify-center">
-          {!menuOpen ? (
-            <button onClick={() => setMenuOpen(true)} className="space-y-1 focus:outline-none">
-              <div className="w-6 h-0.5 bg-white"></div>
-              <div className="w-6 h-0.5 bg-white"></div>
-              <div className="w-6 h-0.5 bg-white"></div>
-            </button>
-          ) : (
-            <button onClick={() => setMenuOpen(false)} className="text-2xl focus:outline-none hover:text-gray-400 transition-colors">
-              ✕
-            </button>
-          )}
-        </div>
+        <button
+  onClick={() => setMenuOpen(!menuOpen)}
+  className="border-b border-gray-700 w-full h-[60px] py-6 flex justify-center items-center  focus:outline-none cursor-pointer"
+>
+  {!menuOpen ? (
+    <div className="space-y-1">
+      <div className="w-6 h-0.5 bg-white"></div>
+      <div className="w-6 h-0.5 bg-white -ml-2 hover:ml-0 transition-all duration-300"></div>
+      <div className="w-6 h-0.5 bg-white"></div>
+    </div>
+  ) : (
+    <span className="text-xl  hover:text-gray-400 transition-colors">✕</span>
+  )}
+</button>
+
 
         <div className="mt-60 flex flex-col gap-7">
           <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
