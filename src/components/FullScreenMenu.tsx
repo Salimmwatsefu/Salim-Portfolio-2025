@@ -9,9 +9,9 @@ interface FullScreenMenuProps {
 const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-black text-white transition-transform duration-500 ease-in-out z-40 ${
-        isOpen ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`fixed left-0 w-full h-full bg-black text-white transition-all duration-500 ease-in-out z-40 ${
+    isOpen ? "top-0" : "top-full"
+  }`}
     >
       {/* Close Button */}
       <button
